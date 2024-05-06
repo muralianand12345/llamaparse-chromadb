@@ -28,8 +28,9 @@ uvicorn main:app --reload
 
 ## Improvements:
 
-- Custom chatbot reply template to add reference links and image the replies.
-- Use Online DB such as MongoDB Vector
+- Ablity to attach files suchs as image and graphs.
+- Answer multiple questions at once.
+- Add user DB.
 - Parallel processing for loading database.
 
 [Page Top](#chatbot-llamaparse)
