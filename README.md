@@ -21,6 +21,8 @@ python -m venv .venv
 ./.venv/Scripts/activate
 pip install -r requirements.txt
 uvicorn main:app --reload
+or 
+fastapi dev main.py
 ```
 
 - Open up [**localhost:8000/docs**](http://localhost:8000/docs) to test the APIs.
