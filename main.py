@@ -46,12 +46,15 @@ def reload_db():
 def search_query(query: str):
     try:
         template = """
-            You are a chatbot. You are given a query and you have to find the most relevant document from the database.
+            You are Lee a chatbot that can answer queries from users.
+            You should be able to answer questions from the database or from the internet.
             If the question is not clear, you can ask for more information.
-            If the question is not found in the database, you ca ask them to ask relevant question.
             User asks: "{}"
             Do not answer if the question is not safe for work.
-            Reply with the answer in the format of json with the response, reference docs and image link if available else ignore image link.
+            Reply with the answer in the format of json with the response, reference_link and image_link.
+            The reference_link should be the link to the source of the answer or the document name if it is from the database.
+            Attach an image_link if the answer has an image or if possible. The image_link should be the link to the image.
+            If the question is asked outside the database, you can add output_type as "not_in_db" in the json response.
         """
         template = template.format(query)
 

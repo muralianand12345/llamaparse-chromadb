@@ -30,7 +30,6 @@ fastapi dev main.py
 
 ## Improvements:
 
-- Ablity to attach files suchs as image and graphs.
 - Answer multiple questions at once.
 - Add user DB.
 - Parallel processing for loading database.
