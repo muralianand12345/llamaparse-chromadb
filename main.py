@@ -1,8 +1,8 @@
 import os
 import json
 import nest_asyncio
-from fastapi import FastAPI, HTTPException
 from dotenv import dotenv_values
+from fastapi import FastAPI, HTTPException
 from starlette.responses import Response
 
 from functions.store_vector import read_data_folder
@@ -17,24 +17,41 @@ os.environ["OPENAI_API_KEY"] = env_config["OPENAI_API_KEY"]
 
 config = json.load(open("config.json"))
 
+if not config:
+    raise Exception("Config file not found")
+
 storage_path = config.get("storage_path")
 collection_name = config.get("collection_name")
 result_type = config.get("result_type")
+
+if not all([storage_path, collection_name, result_type]):
+    raise Exception("Config file is missing required fields")
+
 documents_path = read_data_folder("./data")
 
 app = FastAPI()
 
-load_db(storage_path, collection_name, result_type, documents_path)
-index = load_index(storage_path, collection_name)
+try:
+    if not os.path.exists(storage_path):
+        load_db(storage_path, collection_name, result_type, documents_path)
+    index = load_index(storage_path, collection_name)
+except Exception as e:
+    raise Exception(str(e))
 
 
 @app.get("/")
 def read_root():
+    """
+    Check if the API is running.
+    """
     return {"message": "API is running"}
 
 
 @app.post("/db/reload")
 def reload_db():
+    """
+    Reload the database with the latest data.
+    """
     try:
         load_db(storage_path, collection_name, result_type, documents_path)
         return {"message": "Database reloaded"}
@@ -44,6 +61,9 @@ def reload_db():
 
 @app.post("/query")
 def search_query(query: str):
+    """
+    Search the query in the database and return the response.
+    """
     try:
         template = """
             You are Lee a chatbot that can answer queries from users.
@@ -57,10 +77,8 @@ def search_query(query: str):
             If the question is asked outside the database, you can add output_type as "not_in_db" in the json response.
         """
         template = template.format(query)
-
         query_engine = index.as_query_engine()
         bot_response = query_engine.query(template)
-
         response_json = json.loads(bot_response.response)
 
         return Response(
