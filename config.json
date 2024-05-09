@@ -1,5 +1,7 @@
 {
     "storage_path": "./storage",
     "collection_name": "chromadb_talentship",
-    "result_type": "markdown"
+    "result_type": "markdown",
+    "embedding_model": "text-embedding-3-small",
+    "generator_model": "gpt-3.5-turbo-0125"
 }
