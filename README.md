@@ -2,6 +2,8 @@
 
 A LLM Chatbot that uses [LlamaIndex](https://www.llamaindex.ai/) and [OpenAI](https://openai.com/) with Custom PDF data to answer users query.
 
+__Updated Repo Here:__ [**Click Me**](https://github.com/muralianand12345/llama-parse-embedding)
+
 ## Tech Used:
 - Llama Index
 - Llama Parse
